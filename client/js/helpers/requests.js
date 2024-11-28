@@ -12,14 +12,15 @@ override(fetch)
 
  export const nearbyRequest = (place) => {
     ops.showLoading() // Block page while loading
-    const requestObject = JSON.stringify({
+    const requestObject = new URLSearchParams({
         lat: place.geometry.location.lat(),
         lng: place.geometry.location.lng(),
         cityname: place.name,
         language: state.language,
-    })
+    }).toString();
+
     // TODO: refresh center (when city in cache it seems like center is not refreshed) 
-    fetch('/nearby/' + requestObject, { localCache: true, cacheTTL: 5 })
+    fetch('/nearby?' + requestObject, { localCache: true, cacheTTL: 5 })
         .then(function (response) {
             return response.json()
         })
@@ -36,13 +37,14 @@ override(fetch)
 // Same as nearbyRequest()
 export const nearbyTriggeredRequest = (place) => {
     ops.showLoading() // Block page while loading
-    const requestObject = JSON.stringify({
+    const requestObject = new URLSearchParams({
         lat: place.lat,
         lng: place.lng,
         cityname: place.name,
         language: state.language,
-    })
-    fetch('/nearby/' + requestObject, { localCache: true, cacheTTL: 5 })
+    }).toString();
+
+    fetch('/nearby?' + requestObject, { localCache: true, cacheTTL: 5 })
         .then(function (response) {
             return response.json()
         })

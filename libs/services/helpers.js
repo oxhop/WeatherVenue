@@ -48,7 +48,7 @@ async function fetchWeather0 (westLng, northLat, eastLng, southLat, mapZoom) {
 
 async function fetchWeather (city, language) {
   return new Promise(async (resolve, reject) => {
-    const APIUrlWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${city.latitude}&lon=${city.longitude}&lang=${language}&exclude=hourly,minutely,hourly&units=metric&appid=${OPENWEATHERMAP_API_KEY}`
+    const APIUrlWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${city.latitude}&lon=${city.longitude}&lang=${language}&exclude=hourly,minutely&units=metric&appid=${OPENWEATHERMAP_API_KEY}`
     // const body0 = await api({ url: APIUrlWeather, method: 'get' })
     const body0 = await axios.get(APIUrlWeather)
     const data0 = await body0.data

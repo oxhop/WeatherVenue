@@ -59,21 +59,10 @@ async function routes(fastify, options) {
         .prop('language', S.string().minLength(2).maxLength(2).required())
 
     fastify.get(
-        '/nearby/:city',
+        '/nearby',
         /*{ schema: { body: reqSchema } },*/ async function (req, reply) {
-            if (!req.params.city) {
-                reply.status(400)
-                return res.send({
-                    error: true,
-                    message: 'Bad request',
-                    data: 'Bad request',
-                })
-            }
-
-            const geometry = JSON.parse(req.params.city)
-            const cityname = geometry.cityname
-            language = geometry.language
-
+            console.log(req.query)
+            const {cityname, language, lat,lng } = req.query;
             // Check the redis store for the data first
             const cache = await redis.get(`wv:${cityname}`)
             if (cache) {
@@ -84,14 +73,19 @@ async function routes(fastify, options) {
                 })
             }
             const query = {
-                latitude: geometry.lat,
-                longitude: geometry.lng,
+                latitude: lat,
+                longitude: lng,
             }
+            
             const cities = nearestCities(query, 10)
+            
             const actions = cities.map((city) => {
                 return fetchWeather(city, language)
             })
+
             const forecasts = await Promise.all(actions)
+
+            console.log(forecasts)
             var weathers = forecasts.map((elem) => {
                 return elem.weather
             })
