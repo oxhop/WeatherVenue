@@ -2,13 +2,13 @@ import { LIS } from "./lis.js"
 import CurrentList from "../models/CurrentList.js"
 import { state } from "../state.js"
 import { initMap } from "../weathervenue.js"
-import override from "./overrideFetch.js"
+// import override from "./overrideFetch.js"
 // import { populateHeatMap } from "./populateHeatMap.js"
 import { renderForecastDays } from "./renderForecastDays.js"
 import { ops } from "./routines.js"
 
 
-override(fetch)
+// override(fetch)
 
  export const nearbyRequest = (place) => {
     ops.showLoading() // Block page while loading

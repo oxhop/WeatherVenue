@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import zlib from 'zlib';
+import { fakeApiResponse } from '../consts/fakeOneCallApiResponse.js';
 // const { setupCache } = pkg;
 
 const __filename = fileURLToPath(import.meta.url)
@@ -48,15 +49,19 @@ async function fetchWeather0 (westLng, northLat, eastLng, southLat, mapZoom) {
 
 async function fetchWeather (city, language) {
   return new Promise(async (resolve, reject) => {
-    const APIUrlWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${city.latitude}&lon=${city.longitude}&lang=${language}&exclude=hourly,minutely&units=metric&appid=${OPENWEATHERMAP_API_KEY}`
-    // const body0 = await api({ url: APIUrlWeather, method: 'get' })
-    const body0 = await axios.get(APIUrlWeather)
-    const data0 = await body0.data
-    const APIUrlPollution = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${city.latitude}&lon=${city.longitude}&appid=${OPENWEATHERMAP_API_KEY}`
-    // const body1 = await api({ url: APIUrlPollution, method: 'get' })
-    const body1 = await axios.get(APIUrlPollution)
-    const data1 = await body1.data
-    resolve({ weather: data0, pollution: data1 })
+    // const APIUrlWeather = `https://api.openweathermap.org/data/2.5/onecall?lat=${city.latitude}&lon=${city.longitude}&lang=${language}&exclude=hourly,minutely&units=metric&appid=${OPENWEATHERMAP_API_KEY}`
+    // // const body0 = await api({ url: APIUrlWeather, method: 'get' })
+    // console.log(APIUrlWeather)
+    // const body0 = await axios.get(APIUrlWeather)
+    // const data0 = await body0.data
+    // console.log(data0)
+    // const APIUrlPollution = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${city.latitude}&lon=${city.longitude}&appid=${OPENWEATHERMAP_API_KEY}`
+    // // const body1 = await api({ url: APIUrlPollution, method: 'get' })
+    // const body1 = await axios.get(APIUrlPollution)
+    // const data1 = await body1.data
+    // resolve({ weather: data0, pollution: data1 })
+
+    resolve({ weather: fakeApiResponse})
   })
 }
 
@@ -86,11 +91,11 @@ function formatCities (cities, weathers, pollutions) {
     }
     newVar.features.push(feature)
     weathers[index].cityName = city.name
-    pollutions[index].cityName = city.name
+    // pollutions[index].cityName = city.name
   })
 
   newVar.weather = weathers
-  newVar.pollution = pollutions
+  // newVar.pollution = pollutions
   return newVar
 }
 

@@ -61,7 +61,6 @@ async function routes(fastify, options) {
     fastify.get(
         '/nearby',
         /*{ schema: { body: reqSchema } },*/ async function (req, reply) {
-            console.log(req.query)
             const {cityname, language, lat,lng } = req.query;
             // Check the redis store for the data first
             const cache = await redis.get(`wv:${cityname}`)
@@ -77,15 +76,13 @@ async function routes(fastify, options) {
                 longitude: lng,
             }
             
-            const cities = nearestCities(query, 10)
-            
+            const cities = [nearestCities(query, 10)[0]]
             const actions = cities.map((city) => {
                 return fetchWeather(city, language)
             })
 
             const forecasts = await Promise.all(actions)
 
-            console.log(forecasts)
             var weathers = forecasts.map((elem) => {
                 return elem.weather
             })
