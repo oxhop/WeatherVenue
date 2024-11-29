@@ -40,7 +40,7 @@ async function routes(fastify, options) {
         }
         const urlParams = JSON.parse(req.params.url)
         let westLng, northLat, eastLng, southLat, mapZoom
-        ;({ westLng, northLat, eastLng, southLat, mapZoom } = urlParams)
+            ; ({ westLng, northLat, eastLng, southLat, mapZoom } = urlParams)
         const action = fetchWeather0(westLng, northLat, eastLng, southLat, mapZoom)
         Promise.resolve(action).then(function (response) {
             return res.status(200).send({
@@ -61,7 +61,7 @@ async function routes(fastify, options) {
     fastify.get(
         '/nearby',
         /*{ schema: { body: reqSchema } },*/ async function (req, reply) {
-            const {cityname, language, lat,lng } = req.query;
+            const { cityname, language, lat, lng } = req.query;
             // Check the redis store for the data first
             const cache = await redis.get(`wv:${cityname}`)
             if (cache) {
@@ -75,7 +75,7 @@ async function routes(fastify, options) {
                 latitude: lat,
                 longitude: lng,
             }
-            
+
             const cities = [nearestCities(query, 10)[0]]
             const actions = cities.map((city) => {
                 return fetchWeather(city, language)
@@ -89,6 +89,7 @@ async function routes(fastify, options) {
             var pollutions = forecasts.map((elem) => {
                 return elem.pollution
             })
+
             const result = formatCities(cities, weathers, pollutions)
             redis.setex(`wv:${cityname}`, 24 * 60 * 3, JSON.stringify(result))
             return reply.send({

@@ -2,7 +2,7 @@
 
 WeatherVenue is a weather website using Google Maps and Openweathermap data to let people find best places to visit in their entourage; For warmer winter weather vacation or cool summer escapes. 
 
-It is a NodeJs & Express web app with other dependencies (axios, redis, reverse-geocode, nearby-cities, openweather-apis...).
+It is a NodeJs & Express web app with other dependencies (axios, redis, nearby-cities, openweather-apis...).
 
 
 # A Glimpse of UI

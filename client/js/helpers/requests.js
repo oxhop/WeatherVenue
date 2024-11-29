@@ -10,7 +10,7 @@ import { ops } from "./routines.js"
 
 // override(fetch)
 
- export const nearbyRequest = (place) => {
+export const nearbyRequest = (place) => {
     ops.showLoading() // Block page while loading
     const requestObject = new URLSearchParams({
         lat: place.geometry.location.lat(),
@@ -49,7 +49,6 @@ export const nearbyTriggeredRequest = (place) => {
             return response.json()
         })
         .then(function (data) {
-            console.log(data)
             state.currentResponse = new CurrentList(data.data)
             LIS.id('location').innerHTML = state.currentResponse.location
             renderForecastDays(state.currentResponse.dailies)

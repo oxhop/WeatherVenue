@@ -20,7 +20,7 @@ export function initMap(first) {
     // initMap() being called a second time, clear earlier data
     state.map.data.forEach((feature) => state.map.data.remove(feature))
     state.google.maps.event.trigger(state.map, 'resize')
-    
+
     configUIControls()
     // _initAccessibility(state.language)
     // Populate current list of cities nearby on the map
@@ -62,7 +62,6 @@ export function initMap(first) {
     if (state.markers && state.markers.length > 0) {
         state.markers.forEach((marker) => {
             marker.addListener('click', () => {
-                console.log(marker.title)
                 state.currentMarked = marker.title
                 // Do not render again when the same marker is clicked !
                 if (latestClicked !== marker.title) {
@@ -148,40 +147,40 @@ const loader = new Loader({
 })
 
 loader.importLibrary('maps')
-        .then(async ({Map}) => {
-            state.googleLib['Map'] = Map;
+    .then(async ({ Map }) => {
+        state.googleLib['Map'] = Map;
 
-            state.map = new Map(LIS.id('map'), {
-                center: state.center,
-                zoom: 10,
-                rotateControl: false,
-                mapTypeControl: false,
-                streetViewControl: false,
-            })
-            // Trigger first request automatically
-            state.language = 'fr'
-            const centerLocation = process.env.CENTER_LOCATION
-            state.currentMarked = centerLocation
-            state.center.lat = process.env.DEFAULT_LAT
-            state.center.lng = process.env.DEFAULT_LNG
-            const pos = {
-                lat: Number(state.center.lat),
-                lng: Number(state.center.lng),
-            }
-            state.map.setCenter(pos)
-            pos.name = centerLocation.charAt(0).toUpperCase() + centerLocation.slice(1)
-            nearbyTriggeredRequest(pos)
-            LIS.id('imgGrid').innerHTML = ''
-            
-            
-            
-            // TODO: Loop over all TempretureCard#html() and attach these functions to events
-            LIS.id('startover').onclick = ops.emptyIt
-            LIS.id('comparision-items').ondrop = (event) => ops.drop(event)
-            LIS.id('comparision-items').ondragover = (event) => ops.allowDrop(event)
-            LIS.id('intro').onclick = () => window.introJs().start()
-            // LIS.id('themeSwitch').onclick = (ev) => ops.themeSwitch()
+        state.map = new Map(LIS.id('map'), {
+            center: state.center,
+            zoom: 10,
+            rotateControl: false,
+            mapTypeControl: false,
+            streetViewControl: false,
         })
+        // Trigger first request automatically
+        state.language = 'fr'
+        const centerLocation = process.env.CENTER_LOCATION
+        state.currentMarked = centerLocation
+        state.center.lat = process.env.DEFAULT_LAT
+        state.center.lng = process.env.DEFAULT_LNG
+        const pos = {
+            lat: Number(state.center.lat),
+            lng: Number(state.center.lng),
+        }
+        state.map.setCenter(pos)
+        pos.name = centerLocation.charAt(0).toUpperCase() + centerLocation.slice(1)
+        nearbyTriggeredRequest(pos)
+        LIS.id('imgGrid').innerHTML = ''
+
+
+
+        // TODO: Loop over all TempretureCard#html() and attach these functions to events
+        LIS.id('startover').onclick = ops.emptyIt
+        LIS.id('comparision-items').ondrop = (event) => ops.drop(event)
+        LIS.id('comparision-items').ondragover = (event) => ops.allowDrop(event)
+        LIS.id('intro').onclick = () => window.introJs().start()
+        // LIS.id('themeSwitch').onclick = (ev) => ops.themeSwitch()
+    })
 
 // TODO: deprecated !
 loader.load().then((google) => {
