@@ -11,6 +11,9 @@ import { nearbyRequest, nearbyTriggeredRequest } from './helpers/requests.js'
 import { ops } from './helpers/routines.js'
 import { showAlertsList } from './helpers/showAlertsList.js'
 import { state } from './state.js'
+import introJs from 'intro.js/intro.js';
+
+
 
 const today = new Date().toDateString()
 LIS.id('date').innerHTML = today
@@ -178,7 +181,7 @@ loader.importLibrary('maps')
         LIS.id('startover').onclick = ops.emptyIt
         LIS.id('comparision-items').ondrop = (event) => ops.drop(event)
         LIS.id('comparision-items').ondragover = (event) => ops.allowDrop(event)
-        LIS.id('intro').onclick = () => window.introJs().start()
+        LIS.id('intro').onclick = () => introJs().start()
         // LIS.id('themeSwitch').onclick = (ev) => ops.themeSwitch()
     })
 
