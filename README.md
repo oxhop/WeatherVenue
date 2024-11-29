@@ -30,8 +30,9 @@ If you want to maintain the project with me; You can always ask.
 Please keep it fair if you want to deploy anywhere; Ask for permission.
 
 Sweet coding !
-
-
+# run the project 
+ 1-install redis
+...
 # License
 
 MIT
