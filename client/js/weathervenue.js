@@ -181,7 +181,35 @@ loader.importLibrary('maps')
         LIS.id('startover').onclick = ops.emptyIt
         LIS.id('comparision-items').ondrop = (event) => ops.drop(event)
         LIS.id('comparision-items').ondragover = (event) => ops.allowDrop(event)
-        LIS.id('intro').onclick = () => introJs().start()
+        LIS.id('intro').onclick = () => {
+            try {
+                const intro = introJs();
+                intro.setOptions({
+                    steps: [
+                        {
+                            intro: "Welcome to the application! Let me guide you through the features.",
+                        },
+                        {
+                            element: '#startover',
+                            intro: "Click here to start over and clear all data.",
+                        },
+                        {
+                            element: '#comparision-items',
+                            intro: "Drop items here for comparison.",
+                        },
+                        // Only include themeSwitch if it exists
+                        ...(LIS.id('themeSwitch') ? [{
+                            element: '#themeSwitch',
+                            intro: "Use this button to toggle between light and dark themes.",
+                        }] : [])
+                    ]
+                });
+                intro.start();
+            } catch (err) {
+                console.error("Intro.js initialization failed: ", err);
+            }
+        };
+        
         // LIS.id('themeSwitch').onclick = (ev) => ops.themeSwitch()
     })
 
