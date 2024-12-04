@@ -71,7 +71,7 @@ async function routes(fastify, options) {
             const cities = [cityname, ...nearestCities(query, 10)];
         
             const cityDataPromises = cities.map(async (city) => {
-                const cacheKey = `wv:city:${city}`;
+                const cacheKey = `wv:city:${city.name}`;
                 let cityData = await redis.get(cacheKey);
         
                 if (!cityData) {
@@ -92,33 +92,13 @@ async function routes(fastify, options) {
         
             // Resolve all city data promises
             const allCityData = await Promise.all(cityDataPromises);
-        
+            console.log(allCityData)
             // Format and return the results
             const result = formatCities(
                 allCityData.map((data) => data.city),
                 allCityData.map((data) => data.weather),
                 allCityData.map((data) => data.pollution)
             );
-        
-
-            }
-
-            const cities = nearestCities(query, 10)
-            const actions = cities.map((city) => {
-                return fetchWeather(city, language)
-            })
-
-            const forecasts = await Promise.all(actions)
-
-            var weathers = forecasts.map((elem) => {
-                return elem.weather
-            })
-            var pollutions = forecasts.map((elem) => {
-                return elem.pollution
-            })
-
-            const result = formatCities(cities, weathers, pollutions)
-            redis.setex(`wv:${cityname}`, 24 * 60 * 3, JSON.stringify(result))
 
             return reply.send({
                 error: false,

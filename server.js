@@ -62,36 +62,7 @@ fastify.register(viewsPlugin, {
 /*********************************************************************************************** */
 // !!SPAM ASSASSIN !!
 fastify.register(fastifyRateLimit, config('PING_LIMITER'))
-// TODO: Rate limiter && honeyPot except in process.env === "api"
 fastify.addHook('onRequest', isSpam)
-
-// const localize = {
-//     en: require('ajv-i18n/localize/en'),
-//     'en-US': require('ajv-i18n/localize/en'),
-//     ar: require('ajv-i18n/localize/ar'),
-//     fr: require('ajv-i18n/localize/fr'),
-// }
-
-// All unhandled errors which are handled by fastify: just send http response
-// fastify.setErrorHandler(function (error, request, reply) {
-//     if (reply.statusCode === 429) {
-//         error.message = 'You hit the rate limit! Slow down please!'
-//         reply.send(error)
-//         return reply
-//     }
-
-//     if (error.validation) {
-//         localize[request.cookies.locale || 'en'](error.validation)
-//         reply.status(422).send(error.validation)
-//         return reply
-//     }
-//     error.message = error.message.slice(0, 3000)
-//     request.log.error(error)
-//     error.message = 'Server is having hard times :( Please try again later.'
-//     reply.status(409).send(error)
-// })
-
-// fastify.register(chatRouter, { prefix: 'chat' })
 fastify.register(routes)
 
 const start = async () => {
