@@ -20,6 +20,7 @@ export default {
                 '*.googleusercontent.com',
                 'unpkg.com',
             ],
+            'script-src-attr': ["'unsafe-inline'"],
             'img-src': [
                 "'self'",
                 'https://*.googleapis.com',

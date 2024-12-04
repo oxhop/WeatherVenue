@@ -76,7 +76,7 @@ async function routes(fastify, options) {
                 longitude: lng,
             }
 
-            const cities = [nearestCities(query, 10)[0]]
+            const cities = nearestCities(query, 10)
             const actions = cities.map((city) => {
                 return fetchWeather(city, language)
             })
