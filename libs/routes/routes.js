@@ -64,6 +64,7 @@ async function routes(fastify, options) {
             const query = {
                 latitude: lat,
                 longitude: lng,
+
             };
         
             // Fetch nearby cities
@@ -99,6 +100,26 @@ async function routes(fastify, options) {
                 allCityData.map((data) => data.pollution)
             );
         
+
+            }
+
+            const cities = nearestCities(query, 10)
+            const actions = cities.map((city) => {
+                return fetchWeather(city, language)
+            })
+
+            const forecasts = await Promise.all(actions)
+
+            var weathers = forecasts.map((elem) => {
+                return elem.weather
+            })
+            var pollutions = forecasts.map((elem) => {
+                return elem.pollution
+            })
+
+            const result = formatCities(cities, weathers, pollutions)
+            redis.setex(`wv:${cityname}`, 24 * 60 * 3, JSON.stringify(result))
+
             return reply.send({
                 error: false,
                 message: 'Weather data for nearby cities fetched and cached by city',
