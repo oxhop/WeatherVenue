@@ -17,6 +17,55 @@ when deployed after research it should be like:
 ![UI city pictures](CONTRIBUTING/Capture_city_pictures.PNG)
 
 
+# Setup
+
+Run Redis server on default port, fill in .env variables:
+```ts
+// root folder
+NODE_ENV=localhost
+GOOGLE_MAPS_API_KEY=
+OPENWEATHERMAP_API_KEY=
+```
+
+```ts
+// client
+GOOGLE_MAPS_API_KEY=
+DEFAULT_LAT=48.86
+DEFAULT_LNG=2.34
+CENTER_LOCATION=paris
+```
+
+both on root folder and inside client folder.
+
+Openweathermap is no longer completely free, If you cannot get a key to run your tests, please ignore `OPENWEATHERMAP_API_KEY` but use the fake variable here:
+https://github.com/bacloud22/WeatherVenue/blob/main/libs/consts/fakeOneCallApiResponse.js 
+
+and change `fetchWeather` function as follows
+
+```js
+import { fakeApiResponse } from '../consts/fakeOneCallApiResponse.js';
+
+async function fetchWeather (city, language) {
+  return new Promise(async (resolve, reject) => {
+    // const APIUrlWeather = `https://api.openweathermap.org/data/3.0/onecall?lat=${city.latitude}&lon=${city.longitude}&lang=${language}&exclude=hourly,minutely&units=metric&appid=${OPENWEATHERMAP_API_KEY}`
+    // const body0 = await axios.get(APIUrlWeather)
+    // const data0 = await body0.data
+    // const APIUrlPollution = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${city.latitude}&lon=${city.longitude}&appid=${OPENWEATHERMAP_API_KEY}`
+    // const body1 = await axios.get(APIUrlPollution)
+    // const data1 = await body1.data
+    // resolve({ weather: data0, pollution: data1 })
+
+    resolve({ weather: fakeApiResponse})
+  })
+}
+```
+
+also 
+
+```js
+const cities = [nearestCities(query, 10)[0]]// nearestCities(query, 10);
+```
+
 
 # Contribution
 
