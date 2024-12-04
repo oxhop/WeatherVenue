@@ -59,21 +59,19 @@ async function routes(fastify, options) {
         .prop('language', S.string().minLength(2).maxLength(2).required())
 
         fastify.get('/nearby', async function (req, reply) {
-            const { cityname, language, lat, lng } = req.query;
+            const { language, lat, lng } = req.query;
         
             const query = {
                 latitude: lat,
                 longitude: lng,
-
             };
         
             // Fetch nearby cities
-            const cities = [cityname, ...nearestCities(query, 10)];
-        
+            const cities = nearestCities(query, 10);
+
             const cityDataPromises = cities.map(async (city) => {
                 const cacheKey = `wv:city:${city.name}`;
                 let cityData = await redis.get(cacheKey);
-        
                 if (!cityData) {
                     // Fetch city weather and cache it
                     const weatherData = await fetchWeather(city, language);
@@ -86,13 +84,13 @@ async function routes(fastify, options) {
                 } else {
                     cityData = JSON.parse(cityData);
                 }
-        
+                
                 return cityData;
             });
         
             // Resolve all city data promises
             const allCityData = await Promise.all(cityDataPromises);
-            console.log(allCityData)
+            
             // Format and return the results
             const result = formatCities(
                 allCityData.map((data) => data.city),
