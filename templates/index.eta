@@ -51,7 +51,7 @@
   </div>
 
   <h3 class="sectionHead" id="gallery">Des images locales de la ville principale apparaîtront ci-dessous</h3>
-  <div class="row" id="imgGrid" data-intro=<%= messages.tour[lang].gallery %> data-position="auto">
+  <div id="imgGrid" data-intro=<%= messages.tour[lang].gallery %> data-position="auto">
 
   </div>
   <%~ includeFile('footer', it); %>

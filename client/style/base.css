@@ -207,7 +207,7 @@ html {
   div.featured_pictures{
     flex-grow: 1;
     margin: 2px;
-    background-color: violet;
+    background-color: rgba(238, 130, 238, 0.171);
     height: 200px;
   }
   
