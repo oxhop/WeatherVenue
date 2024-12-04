@@ -12,7 +12,8 @@ import { ops } from './helpers/routines.js'
 import { showAlertsList } from './helpers/showAlertsList.js'
 import { state } from './state.js'
 import introJs from 'intro.js/intro.js';
-import { messages } from './libs/services/messages.js';
+import { messages } from './translations.js'
+
 const currentLang = 'fr';
 
 
