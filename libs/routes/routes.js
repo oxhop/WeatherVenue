@@ -58,47 +58,54 @@ async function routes(fastify, options) {
         .prop('cityname', S.string().minLength(3).maxLength(180).required())
         .prop('language', S.string().minLength(2).maxLength(2).required())
 
-    fastify.get(
-        '/nearby',
-        /*{ schema: { body: reqSchema } },*/ async function (req, reply) {
+        fastify.get('/nearby', async function (req, reply) {
             const { cityname, language, lat, lng } = req.query;
-            // Check the redis store for the data first
-            const cache = await redis.get(`wv:${cityname}`)
-            if (cache) {
-                return reply.send({
-                    error: false,
-                    message: `Weather data for nearby cities for ${cityname} from the cache`,
-                    data: JSON.parse(cache),
-                })
-            }
+        
             const query = {
                 latitude: lat,
                 longitude: lng,
-            }
-
-            const cities = [nearestCities(query, 10)[0]]
-            const actions = cities.map((city) => {
-                return fetchWeather(city, language)
-            })
-
-            const forecasts = await Promise.all(actions)
-
-            var weathers = forecasts.map((elem) => {
-                return elem.weather
-            })
-            var pollutions = forecasts.map((elem) => {
-                return elem.pollution
-            })
-
-            const result = formatCities(cities, weathers, pollutions)
-            redis.setex(`wv:${cityname}`, 24 * 60 * 3, JSON.stringify(result))
+            };
+        
+            // Fetch nearby cities
+            const cities = [cityname, ...nearestCities(query, 10)];
+        
+            const cityDataPromises = cities.map(async (city) => {
+                const cacheKey = `wv:city:${city}`;
+                let cityData = await redis.get(cacheKey);
+        
+                if (!cityData) {
+                    // Fetch city weather and cache it
+                    const weatherData = await fetchWeather(city, language);
+                    cityData = {
+                        city,
+                        weather: weatherData.weather,
+                        pollution: weatherData.pollution,
+                    };
+                    await redis.setex(cacheKey, 24 * 60 * 60, JSON.stringify(cityData)); // Cache for 24 hours
+                } else {
+                    cityData = JSON.parse(cityData);
+                }
+        
+                return cityData;
+            });
+        
+            // Resolve all city data promises
+            const allCityData = await Promise.all(cityDataPromises);
+        
+            // Format and return the results
+            const result = formatCities(
+                allCityData.map((data) => data.city),
+                allCityData.map((data) => data.weather),
+                allCityData.map((data) => data.pollution)
+            );
+        
             return reply.send({
                 error: false,
-                message: 'Weather data for nearby cities from the server',
+                message: 'Weather data for nearby cities fetched and cached by city',
                 data: result,
-            })
-        },
-    )
-}
+            });
+        })
+    };
+        
 
 export default routes
