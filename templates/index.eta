@@ -3,7 +3,7 @@
 
 <head>
   <%~ includeFile('head',
-      { version: 'bootstrap' , centerLocation: 'london' , lang: 'fr' , title: 'Bienvenue',
+      { version: 'bootstrap' , centerLocation: 'london' , lang: lang , title: 'Bienvenue',
         description: 'WeatherVenue vous permet de trouver les meilleurs endroits à visiter dans votre entourage ; Trouvez facilement des vacances d\'hiver plus chaudes ou des escapades estivales fraîches.',
       });
   %>
@@ -15,7 +15,7 @@
   <div id="spinner-front">
     <img src="/images/loading.gif" /><br>
   </div>
-  <%~ includeFile('navbar', { lang: 'fr' }); %>
+  <%~ includeFile('navbar', { lang: lang }); %>
   <div class="container-fluid">
   <h3 class="text-center" id="explanatory-text">Retrouver les meilleurs endroits à visiter dans votre entourage ; Pour des vacances hivernales plus chaudes ou des escapades estivales fraîches.</h3>
   </div>

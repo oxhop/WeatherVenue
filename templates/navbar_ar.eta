@@ -2,7 +2,7 @@
   <a class="navbar-brand" href="/">
       <img id='logo' src="/images/weather_venue_856-8.png" alt="weathervenue.com" width="100" alt="weathervenue" class="d-inline-block align-middle mr-2">
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon">&#8203;</span>
   </button>
@@ -10,7 +10,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal2">خدمات</a>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-target="#exampleModal2">خدمات</a>
       </li>
       <li class="nav-item">
           <a class="nav-link" href="#" id="intro">جولة</a>
@@ -22,13 +22,13 @@
           <a class="nav-link disabled" href="#">الاصدار 2</a>
       </li>
       <li class="nav-item">
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModal">مسؤولية الخدمة</a>
+          <a class="nav-link" href="#" data-bs-toggle="modal" data-target="#exampleModal">مسؤولية الخدمة</a>
       </li>
       <li class="nav-item">
           <a class="nav-link" href='mailto:&#098;&#097;&#099;&#108;&#111;&#117;&#100;&#049;&#052;&#064;&#103;&#109;&#097;&#105;&#108;&#046;&#099;&#111;&#109;?subject=About&nbsp;WeatherVenue'>اتصل بنا</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           اللغات
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

@@ -29,7 +29,7 @@ export default class AqiCard {
         return `
           <div class="col-md-3" style="margin-top:20px;">
               <div class="card" style="${this.style}">
-                  <h4 class="card-title text-center" data-toggle="collapse" href="#collapseId20" role="button" aria-expanded="false">${collapseIcon}${
+                  <h4 class="card-title text-center" data-bs-toggle="collapse" href="#collapseId20" role="button" aria-expanded="false">${collapseIcon}${
             this.aqiInterpretation[this.aqi]
         }</h4>
                   <table style="width:100%">
