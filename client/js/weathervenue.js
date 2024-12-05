@@ -57,6 +57,7 @@ export function initMap(first) {
     const infoWindow = new state.google.maps.InfoWindow()
     const infoWindowContent = LIS.id('infoWindow-content')
     const infoWindowContentPrime = infoWindowContent.cloneNode(true)
+    infoWindowContent.style = "display: none;"
     infoWindow.setContent(infoWindowContent)
     const marker = new state.google.maps.Marker({
         map: state.map,
