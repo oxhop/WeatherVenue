@@ -20,6 +20,7 @@ export default {
                 '*.googleusercontent.com',
                 'unpkg.com',
                 'https://*.googletagmanager.com',
+                'https://*.cookiebot.com'
             ],
             'script-src-attr': ["'unsafe-inline'"],
             'img-src': [
@@ -33,7 +34,10 @@ export default {
                 'https://*.googletagmanager.com',
                 'data:',
             ],
-            'frame-src': ['*.google.com'],
+            'frame-src': [
+                '*.google.com',
+                'https://*.cookiebot.com'
+            ],
             'connect-src': [
                 "'self'",
                 'https://*.googleapis.com',
@@ -42,6 +46,7 @@ export default {
                 'https://*.google-analytics.com',
                 'https://*.analytics.google.com',
                 'https://*.googletagmanager.com',
+                'https://*.cookiebot.com',
                 'data: blob:',
 
             ],
